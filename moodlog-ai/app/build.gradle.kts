@@ -81,6 +81,6 @@ dependencies {
     // AI
     implementation(libs.google.generative.ai)
 
-    // Charts
-    implementation(libs.vico.compose.m3)
+    // WorkManager (daily reminder)
+    implementation(libs.androidx.work.runtime.ktx)
 }
