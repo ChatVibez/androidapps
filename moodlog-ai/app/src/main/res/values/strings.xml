@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoodLog AI</string>
+    <string name="home_title">Bagaimana perasaanmu hari ini?</string>
+    <string name="home_subtitle">Catat mood-mu untuk pelacakan pola dan insight AI.</string>
+    <string name="cta_save">Simpan Mood</string>
+    <string name="journal_hint">Tulis sesuatu yang ada di pikiranmu (opsional)…</string>
+    <string name="saved_toast">Mood tersimpan</string>
+</resources>

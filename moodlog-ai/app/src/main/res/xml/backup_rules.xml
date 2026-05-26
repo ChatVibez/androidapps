@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Local-first: do not auto-backup mood data to Google. -->
+    <exclude domain="database" />
+    <exclude domain="sharedpref" />
+</full-backup-content>
