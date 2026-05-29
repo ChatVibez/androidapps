@@ -50,7 +50,11 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = stringResource(R.string.home_title),
+            text = if (state.displayName.isBlank()) {
+                stringResource(R.string.home_title)
+            } else {
+                stringResource(R.string.home_title_named, state.displayName)
+            },
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.SemiBold
         )

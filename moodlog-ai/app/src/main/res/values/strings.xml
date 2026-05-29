@@ -4,6 +4,7 @@
 
     <!-- Home -->
     <string name="home_title">Bagaimana perasaanmu hari ini?</string>
+    <string name="home_title_named">Hai %1$s, bagaimana perasaanmu hari ini?</string>
     <string name="home_subtitle">Catat mood-mu untuk pelacakan pola dan insight AI.</string>
     <string name="cta_save">Simpan Mood</string>
     <string name="journal_hint">Tulis sesuatu yang ada di pikiranmu (opsional)…</string>
@@ -30,6 +31,12 @@
     <string name="insights_error">Gagal mengambil insight: %1$s</string>
     <string name="insights_no_key">API key Gemini belum diset. Tambahkan GEMINI_API_KEY ke local.properties lalu rebuild.</string>
     <string name="insights_disclaimer">Catatan: insight ini bukan diagnosis medis. Konsultasi profesional jika kamu butuh bantuan.</string>
+    <string name="insights_refresh">Buat ulang</string>
+    <string name="insights_just_now">baru saja</string>
+    <string name="insights_minutes_ago">%1$d menit lalu</string>
+    <string name="insights_hours_ago">%1$d jam lalu</string>
+    <string name="insights_from_cache">Tersimpan • %1$s</string>
+    <string name="insights_just_generated">Baru dibuat • %1$s</string>
 
     <!-- Reminder / notification -->
     <string name="reminder_channel_name">Pengingat Harian</string>
@@ -74,4 +81,18 @@
 
     <!-- Time picker -->
     <string name="time_picker_title">Pilih waktu pengingat</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip">Lewati</string>
+    <string name="onboarding_next">Lanjut</string>
+    <string name="onboarding_finish">Mulai</string>
+    <string name="onboarding_welcome_title">Selamat datang di MoodLog AI</string>
+    <string name="onboarding_welcome_body">Catat mood &amp; jurnal harianmu, lalu dapatkan refleksi mingguan dari AI yang ramah dan tidak menggurui.</string>
+    <string name="onboarding_privacy_title">Privasi-mu nomor satu</string>
+    <string name="onboarding_privacy_body">Semua entry mood dan jurnal disimpan lokal di HP-mu. Tidak ada cloud sync. Fitur AI insight bersifat opsional dan baru aktif saat kamu menekannya.</string>
+    <string name="onboarding_setup_title">Atur app-mu</string>
+    <string name="onboarding_setup_body">Sapaan personal &amp; jam pengingat harian. Bisa kamu ubah kapan saja di Pengaturan.</string>
+    <string name="onboarding_name_label">Nama panggilan (opsional)</string>
+    <string name="onboarding_name_hint">Contoh: Tyo</string>
+    <string name="onboarding_reminder_at">Pengingat harian: %1$02d:%2$02d</string>
 </resources>

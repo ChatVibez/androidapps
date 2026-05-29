@@ -14,10 +14,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import com.moodlog.ai.data.preferences.SettingsRepository
-import com.moodlog.ai.data.preferences.UserPreferences
+import com.moodlog.ai.data.preferences.ThemeMode
 import com.moodlog.ai.notification.NotificationChannels
 import com.moodlog.ai.notification.ReminderScheduler
-import com.moodlog.ai.ui.navigation.AppNavigation
+import com.moodlog.ai.ui.AppRoot
 import com.moodlog.ai.ui.theme.MoodLogTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -37,21 +37,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Setup notification channel and schedule daily reminder using stored prefs.
-        // Uses lifecycleScope so the channel + schedule call happens once startup is ready;
-        // ReminderScheduler.scheduleDaily uses KEEP policy by default so we won't bump the
-        // next-fire time on every cold start.
+        // Setup notification channel and schedule the daily reminder using stored prefs.
+        // We only schedule for users who already completed onboarding — first-time users get
+        // their reminder scheduled by [OnboardingViewModel.finish] instead.
+        // ReminderScheduler.scheduleDaily uses KEEP by default so we don't bump the next
+        // fire time on every cold start.
         NotificationChannels.ensureCreated(this)
         lifecycleScope.launch {
-            val prefs: UserPreferences = settingsRepository.preferences.first()
-            if (prefs.reminderEnabled) {
-                ReminderScheduler.scheduleDaily(
-                    context = this@MainActivity,
-                    hour = prefs.reminderHour,
-                    minute = prefs.reminderMinute
-                )
-            } else {
-                ReminderScheduler.cancel(this@MainActivity)
+            val prefs = settingsRepository.preferences.first()
+            if (prefs.onboardingCompleted) {
+                if (prefs.reminderEnabled) {
+                    ReminderScheduler.scheduleDaily(
+                        context = this@MainActivity,
+                        hour = prefs.reminderHour,
+                        minute = prefs.reminderMinute
+                    )
+                } else {
+                    ReminderScheduler.cancel(this@MainActivity)
+                }
             }
         }
 
@@ -61,10 +64,10 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val prefs by settingsRepository.preferences.collectAsState(initial = UserPreferences())
-            MoodLogTheme(themeMode = prefs.themeMode) {
+            val prefs by settingsRepository.preferences.collectAsState(initial = null)
+            MoodLogTheme(themeMode = prefs?.themeMode ?: ThemeMode.SYSTEM) {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    AppNavigation()
+                    AppRoot(prefs = prefs)
                 }
             }
         }
