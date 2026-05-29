@@ -83,4 +83,7 @@ dependencies {
 
     // WorkManager (daily reminder)
     implementation(libs.androidx.work.runtime.ktx)
+
+    // DataStore Preferences (settings persistence)
+    implementation(libs.androidx.datastore.preferences)
 }

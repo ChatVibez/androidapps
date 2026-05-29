@@ -36,4 +36,42 @@
     <string name="reminder_channel_desc">Notifikasi pengingat untuk mencatat mood harian.</string>
     <string name="reminder_title">Waktunya catat mood</string>
     <string name="reminder_body">Luangkan 1 menit untuk merefleksikan harimu.</string>
+
+    <!-- App bar / nav -->
+    <string name="action_settings">Pengaturan</string>
+    <string name="action_back">Kembali</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_section_appearance">Tampilan</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_system">Ikuti sistem</string>
+    <string name="settings_theme_light">Terang</string>
+    <string name="settings_theme_dark">Gelap</string>
+    <string name="settings_section_reminder">Pengingat Harian</string>
+    <string name="settings_reminder_enabled">Aktifkan pengingat</string>
+    <string name="settings_reminder_time">Waktu pengingat</string>
+    <string name="settings_reminder_time_value">%1$02d:%2$02d</string>
+    <string name="settings_section_data">Data</string>
+    <string name="settings_delete_all">Hapus semua data mood</string>
+    <string name="settings_delete_all_subtitle">Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="settings_delete_confirm_title">Yakin hapus semua data?</string>
+    <string name="settings_delete_confirm_body">Semua entry mood dan jurnal akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="settings_delete_confirm_cta">Hapus semua</string>
+    <string name="settings_delete_done">Semua data telah dihapus</string>
+    <string name="action_cancel">Batal</string>
+    <string name="action_save">Simpan</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Edit entry -->
+    <string name="edit_title">Edit Mood</string>
+    <string name="edit_delete_confirm_title">Hapus entry ini?</string>
+    <string name="edit_delete_confirm_body">Catatan ini akan dihapus permanen.</string>
+    <string name="edit_action_delete">Hapus</string>
+    <string name="edit_saved_toast">Perubahan disimpan</string>
+    <string name="edit_deleted_toast">Entry dihapus</string>
+    <string name="edit_not_found">Entry tidak ditemukan.</string>
+
+    <!-- Time picker -->
+    <string name="time_picker_title">Pilih waktu pengingat</string>
 </resources>
