@@ -13,8 +13,17 @@ object ReminderScheduler {
     /**
      * Schedules a daily reminder notification at [hour]:[minute] (24h, local time).
      * Uses a periodic 24h worker; first run is delayed to the next occurrence of that time.
+     *
+     * @param replaceExisting when `true`, any existing scheduled work is replaced with the
+     *   new time. Use this when the user changes the reminder time in settings. The default
+     *   `false` keeps the existing schedule on app start to avoid bumping the next-fire time.
      */
-    fun scheduleDaily(context: Context, hour: Int = 21, minute: Int = 0) {
+    fun scheduleDaily(
+        context: Context,
+        hour: Int,
+        minute: Int,
+        replaceExisting: Boolean = false
+    ) {
         val now = Calendar.getInstance()
         val target = (now.clone() as Calendar).apply {
             set(Calendar.HOUR_OF_DAY, hour)
@@ -29,11 +38,11 @@ object ReminderScheduler {
             .setInitialDelay(initialDelayMs, TimeUnit.MILLISECONDS)
             .build()
 
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP, // KEEP avoids resetting on every app start
-            request
-        )
+        val policy =
+            if (replaceExisting) ExistingPeriodicWorkPolicy.UPDATE
+            else ExistingPeriodicWorkPolicy.KEEP
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(WORK_NAME, policy, request)
     }
 
     fun cancel(context: Context) {

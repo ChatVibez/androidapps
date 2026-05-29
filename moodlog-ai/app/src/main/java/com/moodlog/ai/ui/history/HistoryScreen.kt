@@ -1,5 +1,6 @@
 package com.moodlog.ai.ui.history
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,6 +35,7 @@ import java.util.Locale
 @Composable
 fun HistoryScreen(
     contentPadding: PaddingValues,
+    onEntryClick: (Long) -> Unit,
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -94,10 +96,11 @@ fun HistoryScreen(
             )
         } else {
             LazyColumn(
+                modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(state.entries, key = { it.id }) { entry ->
-                    EntryRow(entry)
+                    EntryRow(entry = entry, onClick = { onEntryClick(entry.id) })
                 }
             }
         }
@@ -105,9 +108,13 @@ fun HistoryScreen(
 }
 
 @Composable
-private fun EntryRow(entry: MoodEntry) {
+private fun EntryRow(entry: MoodEntry, onClick: () -> Unit) {
     val df = remember { SimpleDateFormat("EEE, dd MMM HH:mm", Locale("id")) }
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
         Row(
             modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -136,4 +143,3 @@ private fun EntryRow(entry: MoodEntry) {
         }
     }
 }
-

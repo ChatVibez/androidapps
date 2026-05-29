@@ -14,7 +14,13 @@ class MoodRepository @Inject constructor(
 
     suspend fun save(entry: MoodEntry): Long = dao.insert(entry)
 
+    suspend fun update(entry: MoodEntry) = dao.update(entry)
+
+    suspend fun getById(id: Long): MoodEntry? = dao.getById(id)
+
     suspend fun entriesSince(epochMillis: Long): List<MoodEntry> = dao.getSince(epochMillis)
 
     suspend fun delete(id: Long) = dao.deleteById(id)
+
+    suspend fun deleteAll() = dao.deleteAll()
 }
