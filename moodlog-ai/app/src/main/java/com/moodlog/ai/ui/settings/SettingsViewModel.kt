@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.moodlog.ai.data.preferences.SettingsRepository
 import com.moodlog.ai.data.preferences.ThemeMode
 import com.moodlog.ai.data.preferences.UserPreferences
+import com.moodlog.ai.data.repository.InsightRepository
 import com.moodlog.ai.data.repository.MoodRepository
 import com.moodlog.ai.notification.ReminderScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +27,8 @@ sealed interface SettingsEvent {
 class SettingsViewModel @Inject constructor(
     application: Application,
     private val settings: SettingsRepository,
-    private val moodRepository: MoodRepository
+    private val moodRepository: MoodRepository,
+    private val insightRepository: InsightRepository
 ) : AndroidViewModel(application) {
 
     val state: StateFlow<UserPreferences> = settings.preferences.stateIn(
@@ -76,6 +78,8 @@ class SettingsViewModel @Inject constructor(
     fun deleteAllData() {
         viewModelScope.launch {
             moodRepository.deleteAll()
+            // Cached AI insight describes deleted data, so clear it too.
+            insightRepository.clearCache()
             _events.emit(SettingsEvent.DataDeleted)
         }
     }

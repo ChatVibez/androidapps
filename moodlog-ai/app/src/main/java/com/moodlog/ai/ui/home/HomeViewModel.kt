@@ -3,6 +3,7 @@ package com.moodlog.ai.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moodlog.ai.data.local.MoodEntry
+import com.moodlog.ai.data.preferences.SettingsRepository
 import com.moodlog.ai.data.repository.MoodRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,16 +18,26 @@ data class HomeUiState(
     val selectedEmoji: String = "😐",
     val journal: String = "",
     val isSaving: Boolean = false,
-    val justSaved: Boolean = false
+    val justSaved: Boolean = false,
+    val displayName: String = ""
 )
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: MoodRepository
+    private val repository: MoodRepository,
+    settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeUiState())
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            settingsRepository.preferences.collect { prefs ->
+                _state.update { it.copy(displayName = prefs.displayName) }
+            }
+        }
+    }
 
     fun onScoreChange(score: Int) = _state.update { it.copy(moodScore = score) }
     fun onEmojiSelect(emoji: String) = _state.update { it.copy(selectedEmoji = emoji) }
@@ -44,8 +55,9 @@ class HomeViewModel @Inject constructor(
                     journal = current.journal
                 )
             )
+            // Reset form fields but preserve displayName for the greeting.
             _state.update {
-                HomeUiState(justSaved = true)
+                HomeUiState(justSaved = true, displayName = it.displayName)
             }
         }
     }

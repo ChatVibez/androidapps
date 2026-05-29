@@ -28,7 +28,9 @@ class SettingsRepository @Inject constructor(
             }.getOrDefault(ThemeMode.SYSTEM),
             reminderEnabled = prefs[KEY_REMINDER_ENABLED] ?: true,
             reminderHour = prefs[KEY_REMINDER_HOUR] ?: 21,
-            reminderMinute = prefs[KEY_REMINDER_MINUTE] ?: 0
+            reminderMinute = prefs[KEY_REMINDER_MINUTE] ?: 0,
+            displayName = prefs[KEY_DISPLAY_NAME] ?: "",
+            onboardingCompleted = prefs[KEY_ONBOARDING_COMPLETED] ?: false
         )
     }
 
@@ -47,10 +49,21 @@ class SettingsRepository @Inject constructor(
         }
     }
 
+    suspend fun setDisplayName(name: String) {
+        dataStore.edit { it[KEY_DISPLAY_NAME] = name.take(MAX_NAME_LEN) }
+    }
+
+    suspend fun setOnboardingCompleted(completed: Boolean) {
+        dataStore.edit { it[KEY_ONBOARDING_COMPLETED] = completed }
+    }
+
     private companion object {
+        const val MAX_NAME_LEN = 40
         val KEY_THEME = stringPreferencesKey("theme_mode")
         val KEY_REMINDER_ENABLED = booleanPreferencesKey("reminder_enabled")
         val KEY_REMINDER_HOUR = intPreferencesKey("reminder_hour")
         val KEY_REMINDER_MINUTE = intPreferencesKey("reminder_minute")
+        val KEY_DISPLAY_NAME = stringPreferencesKey("display_name")
+        val KEY_ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
     }
 }
